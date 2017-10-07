@@ -17,6 +17,7 @@
 
         svg {
             width: 300px;
+            overflow: visible;
         }
     </style>
 </head>
@@ -104,14 +105,14 @@
 
     tl.set('#theMask g', {rotation: -100, transformOrigin:'50% 50%'})
     tl.set('#theMask2 rect', {height: 0})
-    tl.set('#yummy-g *', {opacity: 0})
+//    tl.set('#yummy-g *', {opacity: 0})
     tl.set('#fruits-g *', {opacity: 0})
 
-    tl.staggerTo('#yummy-g *', 0.5, {opacity: 1}, '0.1')
+    tl.staggerFrom("#yummy-g *", 0.3, {opacity:0, scale:0.5, y:80, rotationX:90,  ease:Back.easeOut}, 0.05);
 
     tl.to('#theMask g', 0.5, {rotation: 0}, '-=.3')
 
-    tl.to('#theMask2 rect', 0.5, {height: 105})
+    tl.to('#theMask2 rect', 0.3, {height: 105})
 
     tl.to('#fruits-g *', 0.5, {opacity: 1})
 
