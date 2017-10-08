@@ -110,7 +110,9 @@
     tl.set('#theMask g', {rotation: -100, transformOrigin:'50% 50%'})
     tl.set('#theMask2 rect', {height: 0})
     //    tl.set('#yummy-g *', {opacity: 0})
-    tl.set('#fruits-g *', {opacity: 0})
+//    tl.set('#fruits-left-part *', {opacity: 0})
+//    tl.set('#fruits-right-part *', {opacity: 0})
+
 
     tl.staggerFrom("#yummy-g *", 0.3, {opacity:0, scale:0.5, y:80, rotationX:90,  ease:Back.easeOut}, 0.05);
 
@@ -118,10 +120,9 @@
 
     tl.to('#theMask2 rect', 0.3, {height: 105})
 
-    tl.to('#fruits-g *', 0.5, {opacity: 1})
 
-    tl.staggerFrom('#fruits-left-part *', 0.5, {ease: Expo.easeOut, x: -100}, 0.05, '-=0.5')
-    tl.staggerFrom('#fruits-right-part *', 0.5, {ease: Expo.easeOut, x: 100}, 0.05, '-=0.5')
+    tl.staggerFrom('#fruits-left-part *', 0.6, {ease: Expo.easeOut, x: -100, opacity: 0}, 0.1)
+    tl.staggerFrom('#fruits-right-part *', 0.6, {ease: Expo.easeOut, x: 100, opacity: 0}, 0.1, '-=0.6')
 
 
 </script>
