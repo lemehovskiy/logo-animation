@@ -629,14 +629,63 @@
 </svg>
 
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
 
 <script>
 
 
-    TweenMax.staggerTo('g *', 1, {bezier:[{x:100, y:100}, {x:0, y:200}, {x:-100, y:100}, {x:0, y:0}], ease:Linear.easeNone}, 0.01);
+    function calculateAngle(x, y){
+        var k = Math.abs(y) / Math.abs(x);
+        var angle = Math.atan(k) * 180 / Math.PI;
+        if(y * x > 0){
+            angle = 90 - angle + (y < 0 ? 180 : 0);
+        } else {
+
+            if (x < 0) {
+                angle = angle + (y < 0 ? 90 : 270);
+            }
+
+            else {
+                angle = angle + (y <= 0 ? 90 : 270);
+			}
+        }
+        return angle;
+    }
+
+
+    var svg = document.querySelector('svg');
+
+    var svg_box = svg.viewBox.baseVal;
+
+//    var xCenter = 0;
+//    var yCenter = 0;
+    var poolRadius = 200;
+
+    $('svg g *').each(function(){
+
+        var path_box = $(this)[0].getBBox()
+
+        var path_location_x = path_box.x - svg_box.width / 2;
+        var path_location_y = svg_box.height / 2 - path_box.y;
+
+        var angle = calculateAngle(path_location_x, path_location_y);
+
+//        console.log(path_location_x);
+//        console.log(path_location_y);
+//        console.log(angle);
+
+        var radius = poolRadius;
+        TweenLite.to($(this), 1, {
+            x: Math.cos((angle - 90) * (Math.PI / 180)) * poolRadius,
+            y: Math.sin((angle - 90) * (Math.PI / 180)) * poolRadius,
+            ease: Quad.easeInOut
+        });
+    });
+
+
+//    TweenMax.staggerTo('g *', 1, {bezier:[{x:100, y:100}, {x:0, y:200}, {x:-100, y:100}, {x:0, y:0}], ease:Linear.easeNone}, 0.01);
 
 
 </script>
