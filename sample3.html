@@ -27,7 +27,10 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 498.5 274" style="enable-background:new 0 0 498.5 274;" xml:space="preserve">
 <style type="text/css">
-	.st0{stroke:#201600;stroke-miterlimit:10;}
+	.st0 {
+        stroke: #201600;
+        stroke-miterlimit: 10;
+    }
 </style>
 <g id="XMLID_796_">
 	<rect id="XMLID_797_" x="53.9" y="13.7" class="st0" width="13.5" height="13.7"/>
@@ -628,6 +631,10 @@
 </g>
 </svg>
 
+<div style="text-align: center">
+	Hover me!
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -636,10 +643,10 @@
 <script>
 
 
-    function calculateAngle(x, y){
+    function calculateAngle(x, y) {
         var k = Math.abs(y) / Math.abs(x);
         var angle = Math.atan(k) * 180 / Math.PI;
-        if(y * x > 0){
+        if (y * x > 0) {
             angle = 90 - angle + (y < 0 ? 180 : 0);
         } else {
 
@@ -649,7 +656,7 @@
 
             else {
                 angle = angle + (y <= 0 ? 90 : 270);
-			}
+            }
         }
         return angle;
     }
@@ -668,62 +675,60 @@
     var particles = [];
 
 
-    $('svg g *').each(function(){
+    $('svg g *').each(function () {
 
         var path_box = $(this)[0].getBBox()
 
         particles.push({
             element: $(this)[0],
-			x: path_box.x,
-			y: path_box.y
+            x: path_box.x,
+            y: path_box.y
         });
     });
 
 
-
-    $('svg').hover(function(){
+    $('svg').hover(function () {
         svg_animation();
 
-	}, function(){
+    }, function () {
         svg_hover_out();
-	});
+    });
 
-	function svg_hover_out(){
+    function svg_hover_out() {
 
-//        TweenMax.to('svg', 0.5, {
-//            rotation: 0
-//        });
+        TweenMax.to('svg', 0.5, {
+            rotation: 360
+        });
 
-        setTimeout(function(){
-            particles.forEach(function(item){
-                clearInterval(item.interval);
-
-                TweenLite.to(item.element, 0.5, {
-                    x: 0,
-                    y: 0,
-                    rotation: 0
-                });
-            });
-		}, 300)
-	}
-
-	function svg_animation() {
         particles.forEach(function (item) {
+            clearInterval(item.interval);
 
+            TweenMax.to(item.element, 0.5, {
+                x: 0,
+                y: 0,
+                rotation: 0,
+				delay: 0.3
+            });
+        });
+    }
 
+    function svg_animation() {
+
+        TweenMax.to('svg', 5, {
+            rotation: '+=360',
+			repeat: -1,
+            ease: Linear.easeNone,
+            delay: 0.3
+
+        });
+
+        particles.forEach(function (item) {
             var path_location_x = item.x - svg_box.width / 2;
             var path_location_y = svg_box.height / 2 - item.y;
 
             var angle = calculateAngle(path_location_x, path_location_y);
 
             ring_animation();
-
-//            TweenMax.to('svg', 5, {
-//                rotation: 360,
-//                repeat: -1,
-//                ease: Linear.easeNone,
-//                delay: 0.3
-//            });
 
             item.interval = setInterval(function () {
                 ring_animation();
@@ -734,8 +739,8 @@
                 var random_duration = getRandomInt(1, 2);
                 var random_angle = getRandomInt(-50, 50);
 
-                var x = (Math.cos((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) - (path_location_x + getRandomInt(-20, 60));
-                var y = (Math.sin((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) + (path_location_y + getRandomInt(-20, 60));
+                var x = (Math.cos((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) - (path_location_x + getRandomInt(-20, 20));
+                var y = (Math.sin((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) + (path_location_y + getRandomInt(-20, 20));
 
                 TweenLite.to(item.element, random_duration, {
                     x: x,
@@ -747,7 +752,6 @@
 
         });
     }
-
 
 
 </script>
