@@ -665,48 +665,90 @@
 
     var poolRadius = 200;
 
-    $('svg g *').each(function(){
+    var particles = [];
 
-        var $this = $(this);
+
+    $('svg g *').each(function(){
 
         var path_box = $(this)[0].getBBox()
 
-        var path_location_x = path_box.x - svg_box.width / 2;
-        var path_location_y = svg_box.height / 2 - path_box.y;
+        particles.push({
+            element: $(this)[0],
+			x: path_box.x,
+			y: path_box.y
+        });
+    });
 
-        var angle = calculateAngle(path_location_x, path_location_y);
 
 
-        ring_animation();
+    $('svg').hover(function(){
+        svg_animation();
 
-        TweenMax.to('svg', 3, {
-            rotation: 360,
-            repeat: -1,
-            ease: Linear.easeNone,
-            delay: 0.3
+	}, function(){
+        svg_hover_out();
+	});
+
+	function svg_hover_out(){
+
+        console.log('asdf');
+
+        TweenMax.to('svg', 0.5, {
+            rotation: 0
         });
 
-        setInterval(function(){
-            ring_animation();
-		}, 500);
+        setTimeout(function(){
+            particles.forEach(function(item){
+                clearInterval(item.interval);
 
-        function ring_animation(){
-            var random_rotation = getRandomInt(-90, 90);
-            var random_duration = getRandomInt(1, 2);
-            var random_angle = getRandomInt(-50, 50);
-
-            var x = (Math.cos((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) - (path_location_x + getRandomInt(-20, 20));
-            var y = (Math.sin((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) + (path_location_y + getRandomInt(-20, 20));
-
-            TweenLite.to($this, random_duration, {
-                x: x,
-                y: y,
-                ease:Linear.easeNone,
-                rotation: '+=' + random_rotation
+                TweenLite.to(item.element, 0.5, {
+                    x: 0,
+                    y: 0,
+                    rotation: 0
+                });
             });
-		}
+		}, 300)
+	}
 
-    });
+	function svg_animation() {
+        particles.forEach(function (item) {
+
+
+            var path_location_x = item.x - svg_box.width / 2;
+            var path_location_y = svg_box.height / 2 - item.y;
+
+            var angle = calculateAngle(path_location_x, path_location_y);
+
+            ring_animation();
+
+            TweenMax.to('svg', 5, {
+                rotation: 360,
+                repeat: -1,
+                ease: Linear.easeNone,
+                delay: 0.3
+            });
+
+            item.interval = setInterval(function () {
+                ring_animation();
+            }, 500);
+
+            function ring_animation() {
+                var random_rotation = getRandomInt(-90, 90);
+                var random_duration = getRandomInt(1, 2);
+                var random_angle = getRandomInt(-50, 50);
+
+                var x = (Math.cos((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) - (path_location_x + getRandomInt(-20, 20));
+                var y = (Math.sin((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) + (path_location_y + getRandomInt(-20, 20));
+
+                TweenLite.to(item.element, random_duration, {
+                    x: x,
+                    y: y,
+                    ease: Linear.easeNone,
+                    rotation: '+=' + random_rotation
+                });
+            }
+
+        });
+    }
 
 
 
