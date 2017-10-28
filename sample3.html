@@ -663,11 +663,11 @@
 
     var svg_box = svg.viewBox.baseVal;
 
-//    var xCenter = 0;
-//    var yCenter = 0;
     var poolRadius = 200;
 
     $('svg g *').each(function(){
+
+        var $this = $(this);
 
         var path_box = $(this)[0].getBBox()
 
@@ -676,20 +676,38 @@
 
         var angle = calculateAngle(path_location_x, path_location_y);
 
-//        console.log(path_location_x);
-//        console.log(path_location_y);
-//        console.log(angle);
 
-        var radius = poolRadius;
-        TweenLite.to($(this), 1, {
-            x: (Math.cos((angle - 90) * (Math.PI / 180)) * poolRadius) - (path_location_x + getRandomInt(-20, 20)),
-            y: (Math.sin((angle - 90) * (Math.PI / 180)) * poolRadius) + (path_location_y + getRandomInt(-20, 20)),
-            ease: Quad.easeInOut
+        ring_animation();
+
+        TweenMax.to('svg', 3, {
+            rotation: 360,
+            repeat: -1,
+            ease: Linear.easeNone,
+            delay: 0.3
         });
+
+        setInterval(function(){
+            ring_animation();
+		}, 500);
+
+        function ring_animation(){
+            var random_rotation = getRandomInt(-90, 90);
+            var random_duration = getRandomInt(1, 2);
+            var random_angle = getRandomInt(-50, 50);
+
+            var x = (Math.cos((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) - (path_location_x + getRandomInt(-20, 20));
+            var y = (Math.sin((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) + (path_location_y + getRandomInt(-20, 20));
+
+            TweenLite.to($this, random_duration, {
+                x: x,
+                y: y,
+                ease:Linear.easeNone,
+                rotation: '+=' + random_rotation
+            });
+		}
+
     });
 
-
-//    TweenMax.staggerTo('g *', 1, {bezier:[{x:100, y:100}, {x:0, y:200}, {x:-100, y:100}, {x:0, y:0}], ease:Linear.easeNone}, 0.01);
 
 
 </script>
