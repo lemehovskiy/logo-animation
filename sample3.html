@@ -690,11 +690,9 @@
 
 	function svg_hover_out(){
 
-        console.log('asdf');
-
-        TweenMax.to('svg', 0.5, {
-            rotation: 0
-        });
+//        TweenMax.to('svg', 0.5, {
+//            rotation: 0
+//        });
 
         setTimeout(function(){
             particles.forEach(function(item){
@@ -720,12 +718,12 @@
 
             ring_animation();
 
-            TweenMax.to('svg', 5, {
-                rotation: 360,
-                repeat: -1,
-                ease: Linear.easeNone,
-                delay: 0.3
-            });
+//            TweenMax.to('svg', 5, {
+//                rotation: 360,
+//                repeat: -1,
+//                ease: Linear.easeNone,
+//                delay: 0.3
+//            });
 
             item.interval = setInterval(function () {
                 ring_animation();
@@ -736,8 +734,8 @@
                 var random_duration = getRandomInt(1, 2);
                 var random_angle = getRandomInt(-50, 50);
 
-                var x = (Math.cos((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) - (path_location_x + getRandomInt(-20, 20));
-                var y = (Math.sin((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) + (path_location_y + getRandomInt(-20, 20));
+                var x = (Math.cos((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) - (path_location_x + getRandomInt(-20, 60));
+                var y = (Math.sin((angle + random_angle - 90) * (Math.PI / 180)) * poolRadius) + (path_location_y + getRandomInt(-20, 60));
 
                 TweenLite.to(item.element, random_duration, {
                     x: x,
