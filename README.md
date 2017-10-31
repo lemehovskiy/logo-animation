@@ -5,3 +5,5 @@
 * [https://lemehovskiy.github.io/logo-animation/sample2.html](https://lemehovskiy.github.io/logo-animation/sample2.html)
 
 * [https://lemehovskiy.github.io/logo-animation/sample3.html](https://lemehovskiy.github.io/logo-animation/sample3.html)
+
+* [https://lemehovskiy.github.io/logo-animation/sample4.html](https://lemehovskiy.github.io/logo-animation/sample4.html)
