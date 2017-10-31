@@ -644,19 +644,6 @@
 
 <script>
 
-    function shuffle (array) {
-        var i = 0
-            , j = 0
-            , temp = null
-
-        for (i = array.length - 1; i > 0; i -= 1) {
-            j = Math.floor(Math.random() * (i + 1))
-            temp = array[i]
-            array[i] = array[j]
-            array[j] = temp
-        }
-    }
-
 
     function calculateAngle(x, y) {
         var k = Math.abs(y) / Math.abs(x);
@@ -765,25 +752,20 @@
 
                 var random_duration = getRandomInt(5, 10);
 
+                move_around_tween();
 
-                var bizier_values = [
-                    {x: points_arr[1].x, y: points_arr[1].y},
-                    {x: points_arr[2].x, y: points_arr[2].y},
-                    {x: points_arr[3].x, y: points_arr[3].y},
-                    {x: points_arr[0].x, y: points_arr[0].y}
-                ];
-
-
-
-                move_around_tween(bizier_values);
-
-                function move_around_tween(bizier_values) {
+                function move_around_tween() {
 
                     item.move_around_tween_tw = TweenMax.to(item.element, random_duration,
                         {
                             bezier: {
                                 curviness: 1.5,
-                                values: bizier_values
+                                values: [
+                                    {x: points_arr[2].x, y: points_arr[2].y},
+                                    {x: points_arr[3].x, y: points_arr[3].y},
+                                    {x: points_arr[0].x, y: points_arr[0].y},
+                                    {x: points_arr[1].x, y: points_arr[1].y}
+                                ]
                             },
                             ease: Linear.easeNone,
                             rotation: get_random_rotation_string(),
